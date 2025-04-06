@@ -2,12 +2,6 @@ require "z1.tools.error"
 require "z1.configuration"
 require "z1.tools.util"
 
-ELETRONS_TYPES = {
-	["-"] = 1,
-	["="] = 2,
-	["%"] = 3
-}
-
 function HandlePattern(params)
 	local pattern, repet = table.unpack(params)
 

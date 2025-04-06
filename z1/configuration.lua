@@ -5,7 +5,16 @@ Z1_CSS = "./z1/z1.css"
 PATTERN_EXT = ".pre.z1"
 OUT_SVG_FILE = "out.svg"
 
+DATABASE = "z1.sqlite3"
+EXAMPLES_DIR = "./z1/examples"
+
 BORDER = 20
+
+ELETRONS_TYPES = {
+	["-"] = 1,
+	["="] = 2,
+	["%"] = 3
+}
 
 -- STANDARD PLUGIN
 STANDARD_LIGATION_SIZE = 30
