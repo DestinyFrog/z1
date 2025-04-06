@@ -2,8 +2,6 @@ require "z1.tools.svg"
 require "z1.tools.error"
 
 Plugin = {
-    BORDER = 20,
-    distance_between_ligations = 16,
     svg = Svg:new()
 }
 
@@ -11,13 +9,6 @@ function Plugin:new(o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
-
-    self.waves = {
-        {0},
-        {self.distance_between_ligations / 2, -self.distance_between_ligations / 2},
-        {self.distance_between_ligations, 0, -self.distance_between_ligations}
-    }
-
     return o
 end
 
@@ -53,8 +44,8 @@ function Plugin:calcAtomsPosition(idx, dad_atom, ligation)
     if dad_atom ~= nil then
         local angle = ligation["angle"]
         local angle_rad = math.pi * angle / 180
-        x = dad_atom["x"] + math.cos(angle_rad) * LIGATION_SIZE
-        y = dad_atom["y"] + math.sin(angle_rad) * LIGATION_SIZE
+        x = dad_atom["x"] + math.cos(angle_rad) * STANDARD_LIGATION_SIZE
+        y = dad_atom["y"] + math.sin(angle_rad) * STANDARD_LIGATION_SIZE
     end
 
     self.atoms[idx]["x"] = x
@@ -105,11 +96,11 @@ function Plugin:measureBounds()
     local cwidth = max_x + -min_x
     local cheight = max_y + -min_y
     
-    self.width = self.BORDER * 2 + cwidth
-    self.height = self.BORDER * 2 + cheight
+    self.width = BORDER * 2 + cwidth
+    self.height = BORDER * 2 + cheight
     
-    self.center_x = self.BORDER + math.abs(min_x)
-    self.center_y = self.BORDER + math.abs(min_y)
+    self.center_x = BORDER + math.abs(min_x)
+    self.center_y = BORDER + math.abs(min_y)
 
     return nil
 end

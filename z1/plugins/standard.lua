@@ -2,11 +2,7 @@ require "z1.tools.svg"
 require "z1.tools.error"
 require "z1.plugins.plugin"
 
-DISTANCE_BETWEEN_LIGATIONS = 15
-
-StandardPlugin = Plugin:new{
-    ATOM_RADIUS = 7,
-}
+StandardPlugin = Plugin:new {}
 
 function StandardPlugin:drawAtom()
     for _, atom in ipairs(self.atoms) do
@@ -29,7 +25,7 @@ function StandardPlugin:drawAtom()
             if charge == -1 then
                 charge = "-"
             end
-            self.svg:subtext(charge, x + self.ATOM_RADIUS, y - self.ATOM_RADIUS)
+            self.svg:subtext(charge, x + STANDARD_ATOM_RADIUS, y - STANDARD_ATOM_RADIUS)
         end
 
         ::continue::
@@ -52,18 +48,18 @@ function StandardPlugin:drawLigation()
         local bx = self.center_x + to_atom["x"]
         local by = self.center_y + to_atom["y"]
 
-        local angles = self.waves[ligation["eletrons"]]
+        local angles = STANDARD_WAVES[ligation["eletrons"]]
 
         local a_angle = math.atan((by - ay), (bx - ax))
         local b_angle = math.pi + a_angle
 
         if ligation["eletrons_behaviour"] ~= "i" then
             for _, angle in ipairs(angles) do
-                local nax = ax + math.cos(a_angle - (math.pi * angle / 180)) * self.ATOM_RADIUS
-                local nay = ay + math.sin(a_angle - (math.pi * angle / 180)) * self.ATOM_RADIUS
+                local nax = ax + math.cos(a_angle - (math.pi * angle / 180)) * STANDARD_ATOM_RADIUS
+                local nay = ay + math.sin(a_angle - (math.pi * angle / 180)) * STANDARD_ATOM_RADIUS
 
-                local nbx = bx + math.cos(b_angle + (math.pi * angle / 180)) * self.ATOM_RADIUS
-                local nby = by + math.sin(b_angle + (math.pi * angle / 180)) * self.ATOM_RADIUS
+                local nbx = bx + math.cos(b_angle + (math.pi * angle / 180)) * STANDARD_ATOM_RADIUS
+                local nby = by + math.sin(b_angle + (math.pi * angle / 180)) * STANDARD_ATOM_RADIUS
 
                 self.svg:line(nax, nay, nbx, nby)
             end
