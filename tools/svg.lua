@@ -1,5 +1,5 @@
-require "z1.tools.error"
-require "z1.configuration"
+require "tools.error"
+require "configuration"
 
 Svg = {
     content = ""

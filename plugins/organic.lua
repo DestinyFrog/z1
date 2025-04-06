@@ -1,6 +1,6 @@
-require "z1.tools.svg"
-require "z1.tools.error"
-require "z1.plugins.plugin"
+require "tools.svg"
+require "tools.error"
+require "plugins.plugin"
 
 OrganicPlugin = Plugin:new {}
 

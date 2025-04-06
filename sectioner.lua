@@ -1,6 +1,6 @@
-require "z1.tools.error"
-require "z1.configuration"
-require "z1.tools.util"
+require "tools.error"
+require "configuration"
+require "tools.util"
 
 function HandlePattern(params)
 	local pattern, repet = table.unpack(params)

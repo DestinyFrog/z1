@@ -1,12 +1,12 @@
-PATTERN_FOLDER = "./z1/pattern"
-Z1_TEMP_SVG = "./z1/z1.temp.svg"
-Z1_CSS = "./z1/z1.css"
+PATTERN_FOLDER = "./pattern"
+Z1_TEMP_SVG = "./z1.temp.svg"
+Z1_CSS = "./z1.css"
 
 PATTERN_EXT = ".pre.z1"
 OUT_SVG_FILE = "out.svg"
 
 DATABASE = "z1.sqlite3"
-EXAMPLES_DIR = "./z1/examples"
+EXAMPLES_DIR = "./examples"
 
 BORDER = 20
 

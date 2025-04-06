@@ -1,6 +1,6 @@
-require "z1.tools.svg"
-require "z1.sectioner"
-require "z1.configuration"
+require "tools.svg"
+require "sectioner"
+require "configuration"
 local sqlite3 = require "lsqlite3"
 
 local export_type = arg[1]

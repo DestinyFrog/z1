@@ -1,8 +1,8 @@
-require "z1.configuration"
-require "z1.sectioner"
+require "configuration"
+require "sectioner"
 
-require "z1.plugins.standard"
-require "z1.plugins.organic"
+require "plugins.standard"
+require "plugins.organic"
 
 local export_type = arg[1]
 local file_name = arg[2]

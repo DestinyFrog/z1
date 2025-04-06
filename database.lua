@@ -1,6 +1,6 @@
 local sqlite3 = require "lsqlite3"
 local uuid = require "uuid"
-require "z1.configuration"
+require "configuration"
 
 uuid.set_rng(uuid.rng.urandom())
 

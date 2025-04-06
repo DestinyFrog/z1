@@ -1,5 +1,5 @@
-require "z1.tools.svg"
-require "z1.tools.error"
+require "tools.svg"
+require "tools.error"
 
 Plugin = {
     svg = Svg:new()
