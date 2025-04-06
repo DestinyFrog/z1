@@ -3,6 +3,9 @@ require "sectioner"
 require "configuration"
 local sqlite3 = require "lsqlite3"
 
+require "plugins.standard"
+require "plugins.organic"
+
 local export_type = arg[1]
 local uid = arg[2]
 
