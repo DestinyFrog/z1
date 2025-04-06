@@ -2,7 +2,7 @@ require "tools.svg"
 require "tools.error"
 require "plugins.plugin"
 
-OrganicPlugin = Plugin:new {}
+OrganicPlugin = Plugin:new{}
 
 function OrganicPlugin:measureBounds()
     local min_x = 0
@@ -21,7 +21,18 @@ function OrganicPlugin:measureBounds()
         if atom["symbol"] == "H" and atom["charge"] == 0 then
             for _, lig in ipairs(self.ligations) do
                 if lig["atoms"][2] == idx and self.atoms[lig["atoms"][1]]["symbol"] == "C" then
-                    goto continue
+                    local has_o = false
+                    for _, c_ligation in ipairs(self.atoms[lig["atoms"][1]]["ligations"]) do
+                        if self.atoms[c_ligation]["symbol"] == "O" then
+                            has_o = true
+                            break
+                        end
+                    end
+
+                    if not has_o then
+                        goto continue
+                    end
+
                 end
             end
         end
@@ -52,8 +63,12 @@ function OrganicPlugin:drawAtom()
         local y = self.center_y + atom["y"]
 
         if charge ~= 0 then
-            if charge == 1 then charge = "+" end
-            if charge == -1 then charge = "-" end
+            if charge == 1 then
+                charge = "+"
+            end
+            if charge == -1 then
+                charge = "-"
+            end
             self.svg:subtext(charge, x + ORGANIC_ATOM_RADIUS, y - ORGANIC_ATOM_RADIUS)
         end
 
@@ -64,13 +79,23 @@ function OrganicPlugin:drawAtom()
         if symbol == "H" and charge == 0 then
             for _, lig in ipairs(self.ligations) do
                 if lig["atoms"][2] == idx and self.atoms[lig["atoms"][1]]["symbol"] == "C" then
-                    goto continue
+                    local has_o = false
+                    for _, c_ligation in ipairs(self.atoms[lig["atoms"][1]]["ligations"]) do
+                        if self.atoms[c_ligation]["symbol"] == "O" then
+                            has_o = true
+                            break
+                        end
+                    end
+
+                    if not has_o then
+                        goto continue
+                    end
+
                 end
             end
         end
 
         self.svg:text(atom["symbol"], x, y)
-
         ::continue::
     end
 end
@@ -81,8 +106,21 @@ function OrganicPlugin:drawLigation()
         local to_atom = self.atoms[ligation["atoms"][2]]
 
         if to_atom["symbol"] == "H" and to_atom["charge"] == 0 and from_atom["symbol"] == "C" or
-            ligation["eletrons_behaviour"] == "i"        
-        then goto continue end
+            ligation["eletrons_behaviour"] == "i" then
+
+            local has_o = false
+            for idx, lig in ipairs(self.ligations) do
+                if lig["atoms"][1] == ligation["atoms"][1] and self.atoms[lig["atoms"][2]]["symbol"] == "O" then
+                    has_o = true
+                    break
+                end
+            end
+    
+            if not has_o then
+                goto continue
+            end
+    
+        end
 
         local ax = self.center_x + from_atom["x"]
         local ay = self.center_y + from_atom["y"]
@@ -123,19 +161,19 @@ function OrganicPlugin:drawLigation()
                 pby = pby + math.sin(b_angle) * ORGANIC_NO_CARBON_LIGATION_DISTANCE
             end
 
-            local nax = pax + math.cos(a_angle - 90)
-            local nay = pay + math.sin(a_angle - 90)
+            local nax = pax + math.cos(a_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            local nay = pay + math.sin(a_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
-            local nbx = pbx + math.cos(b_angle + 90)
-            local nby = pby + math.sin(b_angle + 90)
+            local nbx = pbx + math.cos(b_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            local nby = pby + math.sin(b_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
             self.svg:line(nax, nay, nbx, nby)
 
-            nax = pax + math.cos(a_angle + 90)
-            nay = pay + math.sin(a_angle + 90)
-            
-            nbx = pbx + math.cos(b_angle - 90)
-            nby = pby + math.sin(b_angle - 90)
+            nax = pax + math.cos(a_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            nay = pay + math.sin(a_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+
+            nbx = pbx + math.cos(b_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            nby = pby + math.sin(b_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
             self.svg:line(nax, nay, nbx, nby)
         elseif ligation["eletrons"] == 3 then
@@ -153,19 +191,19 @@ function OrganicPlugin:drawLigation()
                 pby = pby + math.sin(b_angle) * ORGANIC_NO_CARBON_LIGATION_DISTANCE
             end
 
-            local nax = pax + math.cos(a_angle - 90)
-            local nay = pay + math.sin(a_angle - 90)
+            local nax = pax + math.cos(a_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            local nay = pay + math.sin(a_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
-            local nbx = pbx + math.cos(b_angle + 90)
-            local nby = pby + math.sin(b_angle + 90)
+            local nbx = pbx + math.cos(b_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            local nby = pby + math.sin(b_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
             self.svg:line(nax, nay, nbx, nby)
 
-            nax = pax + math.cos(a_angle + 90)
-            nay = pay + math.sin(a_angle + 90)
-            
-            nbx = pbx + math.cos(b_angle - 90)
-            nby = pby + math.sin(b_angle - 90)
+            nax = pax + math.cos(a_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            nay = pay + math.sin(a_angle + 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+
+            nbx = pbx + math.cos(b_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
+            nby = pby + math.sin(b_angle - 90) * ORGANIC_BETWEEN_LIGATION_DISTANCE
 
             self.svg:line(nax, nay, nbx, nby)
 
